@@ -43,7 +43,7 @@ const Product = () => {
   const router = useRouter();
   //desestructuramos desde le query enviado desde el router
   const {
-    query: { id }
+    query: { id },
   } = router;
 
   //desestructuramos desde el contexto
@@ -83,7 +83,7 @@ const Product = () => {
     urlImagen,
     votos,
     creador,
-    haVotado
+    haVotado,
   } = producto;
 
   //vota al producto
@@ -112,27 +112,27 @@ const Product = () => {
     //actualiza el state del producto
     setProducto({
       ...producto,
-      votos: nuevoTotal
+      votos: nuevoTotal,
     });
   };
 
   //verifica si el usuario del mensaje es el creador
-  const esCreador = id => {
+  const esCreador = (id) => {
     if (creador.id === id) {
       return true;
     }
   };
 
   //actualiza los respectivos cambios dentro del comentario
-  const comentarioChange = e => {
+  const comentarioChange = (e) => {
     setComentario({
       ...comentario,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   //agre le comentario
-  const agregarComentario = e => {
+  const agregarComentario = (e) => {
     //previene el estado por defualt del form
     e.preventDefault();
 
@@ -149,17 +149,14 @@ const Product = () => {
     const nuevosComentarios = [...comentarios, comentario];
 
     //actualiza los comentarios en la DB
-    firebase.db
-      .collection("productos")
-      .doc(id)
-      .update({
-        comentarios: nuevosComentarios
-      });
+    firebase.db.collection("productos").doc(id).update({
+      comentarios: nuevosComentarios,
+    });
 
     //actualiza los comentarios en el state
     setComentario({
       ...producto,
-      comentarios: nuevosComentarios
+      comentarios: nuevosComentarios,
     });
   };
 
@@ -186,10 +183,7 @@ const Product = () => {
 
     try {
       //borra el producto segun el id
-      await firebase.db
-        .collection("productos")
-        .doc(id)
-        .delete();
+      await firebase.db.collection("productos").doc(id).delete();
       //nos cambia a la vista root
       router.push("/");
     } catch (error) {
@@ -224,7 +218,7 @@ const Product = () => {
               <p>{descripcion}</p>
               {usuario && (
                 <Fragment>
-                  <h2>Agrega un comentario</h2>
+                  <h2>Agrega un comentario!</h2>
 
                   <form onSubmit={agregarComentario}>
                     <Camp>
